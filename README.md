@@ -1,7 +1,5 @@
 # Screen Switcher
 
->Quick select screen layout using hotkeys
-
 Screen Switcher is a <b>[Blender](https://www.blender.org)</b> add-on to quickly switch screen layouts using hotkeys which are user defined.
 
 
