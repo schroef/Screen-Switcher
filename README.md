@@ -29,6 +29,7 @@ Screen Switcher is a <b>[Blender](https://www.blender.org)</b> add-on to quickly
 
 | **Version** | **Date** | **Change log** |
 | ------------- | ------------- | ------------- |
+| 0.3.1 | 21.05.2018 | • Added quick menu.<br>• Redesign addon pref panel
 | 0.3.1 | 21.05.2018 | • User can now add hotkeys from the addon preferecens panel.<br>• Addon automatically adds 8 items.
 | 0.2 | 05.12.2017 | • Updated method off adding hotkeys
 | 0.1 | 15.12.2017 | • First official release

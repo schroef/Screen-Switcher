@@ -30,7 +30,7 @@ bl_info = {
 	"description": "Switches to the screen layout of the given name",
 	"location": "User Preferences>Input>Screen>",
 	"author": "Rombout Versluijs / kilbeeu",
-	"version": (0, 3, 1),
+	"version": (0, 3, 2),
 	"blender": (2, 7, 8),
 	"warning": "",
 	"category": "Viewport"}
@@ -65,6 +65,11 @@ def get_hotkey_entry_item(km, kmi_name, kmi_value):
 	for i, km_item in enumerate(km.keymap_items):
 		if km.keymap_items.keys()[i] == kmi_name:
 			try:
+				if km.keymap_items[i].properties.name == kmi_value:
+					return km_item
+			except:
+				pass
+			try:
 				if km.keymap_items[i].properties.layoutName == kmi_value:
 					return km_item
 			except:
@@ -88,6 +93,32 @@ def add_hotkey():
 		kmi.active = True
 		addon_keymaps.append((km, kmi)) # also append to global (addon level) hotkey list for easy management
 		i+=1
+	#Add quick menu
+	kmi = km.keymap_items.new("wm.call_menu", "NONE", "PRESS")
+	kmi.properties.name = "screen.switch_menu"
+	kmi.active = True
+	addon_keymaps.append((km, kmi))
+
+
+class QuickSwitchMeny(bpy.types.Menu):
+	bl_label = "Quick Switch Menu"
+	bl_idname = "screen.switch_menu"
+
+
+	def draw(self, context):
+		layout = self.layout
+
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[0][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[0][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[1][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[1][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[2][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[2][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[3][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[3][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[4][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[4][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[5][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[5][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[6][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[6][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[7][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[7][1]
+		layout.operator("screen.set_layout", text='{}'.format(avail_screens(self, context)[8][1]), icon='SPLITSCREEN').layoutItems1=avail_screens(self, context)[8][1]
+
+		layout.separator()
 
 
 class SetScreenLayout(bpy.types.Operator):
@@ -122,21 +153,31 @@ class VIEW3D_ScreenSwitcher(bpy.types.AddonPreferences):
 
 	def draw(self, context):
 		layout = self.layout
-		scene = context.scene
+		col = layout.column()
+
+		col.label('Hotkeys:')
+		col.label('Do NOT remove hotkeys, disable them instead!')
 
 		box=layout.box()
 		split = box.split()
 		col = split.column()
 
-		col.label('Hotkeys:')
-		col.label('Do NOT remove hotkeys, disable them instead!')
-		col.label('Set each shortcut in the dropdown menu named "Screen Layout"')
-		col.separator()
-
 		wm = bpy.context.window_manager
 		kc = wm.keyconfigs.user
 		km = kc.keymaps['Screen']
 
+		kmi = get_hotkey_entry_item(km, "wm.call_menu", "screen.switch_menu")
+		if kmi:
+			col.label('Quick Switch Menu:')
+			col.context_pointer_set("keymap", km)
+			rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
+		else:
+			col.label("restore hotkeys from interface tab")
+
+		box=layout.box()
+		split = box.split()
+		col = split.column()
+		col.label('Screen Layouts:')
 		for i in range(0,8):
 #			if km.keymap_items.keys()[i] == 'Switch to Screen Layout':
 			kmi = get_hotkey_entry_item(km, "screen.set_layout", "ScreenSwitcher"+str(i))
@@ -145,6 +186,7 @@ class VIEW3D_ScreenSwitcher(bpy.types.AddonPreferences):
 				rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
 			else:
 				col.label("restore hotkeys from interface tab")
+		col.label('Set each shortcut in the dropdown menu named "Screen Layout"')
 
 
 ### Register #####################################################################
