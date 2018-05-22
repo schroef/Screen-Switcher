@@ -2,7 +2,7 @@
 
 Screen Switcher is a <b>[Blender](https://www.blender.org)</b> add-on to quickly switch screen layouts using hotkeys which are user-defined.
 
-!['Addon preferences Renders'](https://raw.githubusercontent.com/wiki/schroef/TheaForBlender/images/header_thea4blender.jpg)
+!['Screen-Switcher preview'](https://raw.githubusercontent.com/wiki/schroef/screen-switcher/images/screen-switcher-preview.png)
 
 ## Installation Process
 
