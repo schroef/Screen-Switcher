@@ -30,7 +30,7 @@ bl_info = {
 	"description": "Switches to the screen layout of the given name",
 	"location": "User Preferences>Input>Screen>",
 	"author": "Rombout Versluijs / kilbeeu",
-	"version": (0, 3, 2),
+	"version": (0, 3, 3),
 	"blender": (2, 7, 8),
 	"warning": "",
 	"category": "Viewport"}
@@ -166,17 +166,6 @@ class VIEW3D_ScreenSwitcher(bpy.types.AddonPreferences):
 		kc = wm.keyconfigs.user
 		km = kc.keymaps['Screen']
 
-		kmi = get_hotkey_entry_item(km, "wm.call_menu", "screen.switch_menu")
-		if kmi:
-			col.label('Quick Switch Menu:')
-			col.context_pointer_set("keymap", km)
-			rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
-		else:
-			col.label("restore hotkeys from interface tab")
-
-		box=layout.box()
-		split = box.split()
-		col = split.column()
 		col.label('Screen Layouts:')
 		for i in range(0,8):
 #			if km.keymap_items.keys()[i] == 'Switch to Screen Layout':
@@ -187,6 +176,19 @@ class VIEW3D_ScreenSwitcher(bpy.types.AddonPreferences):
 			else:
 				col.label("restore hotkeys from interface tab")
 		col.label('Set each shortcut in the dropdown menu named "Screen Layout"')
+
+		box=layout.box()
+		split = box.split()
+		col = split.column()
+		kmi = get_hotkey_entry_item(km, "wm.call_menu", "screen.switch_menu")
+		if kmi:
+			col.label('Quick Switch Menu:')
+			col.context_pointer_set("keymap", km)
+			rna_keymap_ui.draw_kmi([], kc, km, kmi, col, 0)
+		else:
+			col.label("restore hotkeys from interface tab")
+
+
 
 
 ### Register #####################################################################
