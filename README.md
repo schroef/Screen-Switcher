@@ -12,7 +12,7 @@ Screen Switcher is a <b>[Blender](https://www.blender.org)</b> add-on to quickly
 5. At the bottom of the window, choose *Install From File*.
 6. Select the file `screen_switcher_VERSION.zip` from your download location..
 7. Activate the checkbox for the plugin that you will now find in the list.
-8. - Set a hotkey for each screen by openeing the keyitem (small arrow).<br>- Choose a screen layout from the dropdown menu named Screen Layout.<br>- Set a hotkey for the item.
+8. Setting up hotkeys:<br>- Set a hotkey for each screen by openeing the keyitem (small arrow).<br>- Choose a screen layout from the dropdown menu named Screen Layout.<br>- Set a hotkey for the item.
 8. Now using this key you can quick switch to the assigned screen layout
 
 
